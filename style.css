@@ -1,8 +1,20 @@
 body {
     margin:0;
+    font-family: 'consolas';
 }
 .game-view {
     background-color: skyblue;
     width: 100vw;
     height: 100vh;
+}
+.start-screen {
+    text-align: center;
+    background-color: lightgreen;
+    font-weight: bold;
+    position: absolute;
+    width: 500px;
+    left: 50%;
+    transform: translate(-50%);
+    padding: 20px;
+    margin-top: 100px;
 }
