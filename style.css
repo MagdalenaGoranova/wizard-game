@@ -18,3 +18,14 @@ body {
     padding: 20px;
     margin-top: 100px;
 }
+.hidden {
+    display: none;
+}
+.wizard {
+    position: absolute;
+    background-image: url('/images/wizard.png');
+    background-size: cover;
+    width: 82px;
+    height: 100px;
+
+}
