@@ -6,8 +6,6 @@ function gameFactory() {
     let scoreScreen = document.querySelector('.score-screen'); 
     let wizardElement = createWizard(wizard.x, wizard.y);
     
-    
-
     playScreen.appendChild(wizardElement);
 
     let factory = {

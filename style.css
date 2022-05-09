@@ -40,12 +40,12 @@ body {
 }
 .bug {
     position: absolute;
-    background-image: url(/images/bug.png);
+    background-image: url('/images/bug.png');
     background-size: cover;
 
 }
 .fireball {
     position: absolute;
-    background-image: url(/images/fire-ball.png);
+    background-image: url('/images/fire-ball.png');
     background-size: cover;
 }

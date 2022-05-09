@@ -17,11 +17,15 @@
             speed: 3, 
             width: 50,
             height: 50,
+            score: 500,
         },
         fireballStats: {
             width: 40,
             height: 40,
             speed: 10,
+            nextBugCreation: 0, 
+            attackSpeed: 400,
+
             //add damage of the bug
         }
     };

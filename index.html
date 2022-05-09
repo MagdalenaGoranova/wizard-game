@@ -17,10 +17,7 @@
     <script src="gameState.js"></script>
     <script src="gameFactory.js"></script>
     <script>
-        
-        let getState = gameStateFactory();
-        let state = getState();
-        let game =  gameFactory();
+        let game = gameFactory();
 
         game.startScreen.addEventListener('click', gameStart);
 
@@ -46,25 +43,35 @@
             if(state.keys.Space) {
                 //First change the picture of the wizard when shooting
                 wizardElement.style.backgroundImage = "url('/images/wizard-fire.png')"; 
+
+                // add timer to separate the release of each fireball 
+                if(state.fireballStats.nextFireballCreation < timestamp)
                 game.createFireball(); 
-                // to do: add timer to separate the release of each fireball 
+                state.fireballStats.nextFireballCreation = timestamp + state.fireballStats.attackSpeed;
+                
             } else {
-                wizardElement.style.backgroundImage = "url('/images/wizard.png)"; 
+                wizardElement.style.backgroundImage = "url('/images/wizard.png')"; 
             }
             // Move fireballs 
             Array.from(document.getElementsByClassName('fireball'))
-            .forEach(x => {
-                let currentPosition = parseInt(x.style.left); // turn px into a number (10px -> 10)
+            .forEach(fireball => {
+                let currentPosition = parseInt(fireball.style.left); // turn px into a number (10px -> 10)
 
-                if(currentPosition + state.fireballStats.width <  game.playScreen.offsetWidth ) {
-                    x.style.left = currentPosition + state.fireballStats.speed + 'px';  // move fireball to the right
+                if(currentPosition + state.fireballStats.width < game.playScreen.offsetWidth ) {
+                    fireball.style.left = currentPosition + state.fireballStats.speed + 'px';  // move fireball to the right
                 } else {
-                    x.remove(); // 
+                    fireball.remove(); // 
                 }
+                // check for collision
+                Array.from(document.getElementsByClassName('bug'))
+                .forEach(bug => {
+                    if (hasCollision(fireball, bug)) {
+                    bug.remove(); 
+                    fireball.remove(); 
+                    state.score += state.bugStats.score; 
+                    } 
+                });
             });
-
-
-
             // Move bugs 
             Array.from(document.getElementsByClassName('bug'))
             .forEach(x => {
@@ -141,6 +148,7 @@
         }
         function onKeyDown(e) {
             console.log(e.code);// the button which is pressed
+            e.preventDefault();
             state.keys[e.code] = true; 
         }
         function onKeyUp(e) {
