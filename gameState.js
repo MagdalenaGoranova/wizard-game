@@ -1,4 +1,5 @@
 function gameStateFactory() {
+    gameOver = false;
     let state = {
         wizard: {
             x: 100, 
