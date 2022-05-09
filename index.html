@@ -42,7 +42,16 @@
 
             modifyWizardPosition(state, game); 
 
-            // move bugs 
+            // Shooting the bugs when pressing space 
+            if(state.keys.Space) {
+                //First change the picture of the wizard when shooting
+                wizardElement.style.backgroundImage = "url('/images/wizard-fire.png')"; 
+                game.createFireball();
+            } else {
+                wizardElement.style.backgroundImage = "url('/images/wizard.png)"; 
+            }
+
+            // Move bugs 
             Array.from(document.getElementsByClassName('bug'))
             .forEach(x => {
                 let currentPosition = parseInt(x.style.left); // turn px into a number (10px -> 10)

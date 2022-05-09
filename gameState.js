@@ -1,5 +1,5 @@
-function gameStateFactory() {
-    let state = {
+
+    var  state = {
         gameOver: false,
         score: 0,
         wizard: {
@@ -17,9 +17,11 @@ function gameStateFactory() {
             speed: 3, 
             width: 50,
             height: 50,
+        },
+        fireballStats: {
+            width: 40,
+            height: 40,
+            //add damage of the bug
         }
     };
-    return function() {
-        return state;
-    };
-}
+    

@@ -1,7 +1,5 @@
 function gameFactory() {
-    let getState = gameStateFactory();
-
-    let { wizard, bugStats } = getState();
+    let { wizard, bugStats,  fireballStats } = state; // state is now global object 
 
     let startScreen = document.querySelector('.start-screen');
     let playScreen = document.querySelector('.play-screen');
@@ -28,6 +26,19 @@ function gameFactory() {
             bugElement.style.top = (playScreen.offsetHeight - bugStats.height) * Math.random() + 'px';
 
            playScreen.appendChild(bugElement);
+        },
+        createFireball: () => {
+            let fireballElement = document.createElement('div');
+            fireballElement.classList.add('fireball'); 
+            // add dynamic width and height so we can change them later in the game 
+            fireballElement.style.width = fireballStats.width + 'px'; 
+            fireballElement.style.height = fireballStats.height + 'px'; 
+
+            // add position of the fireball 
+            fireballElement.style.left = wizard.x + 'px';
+            fireballElement.style.top = wizard.y + 'px'; 
+
+            playScreen.appendChild(fireballElement); 
         }
         
     };
@@ -43,5 +54,6 @@ function createWizard(posX, posY) {
     return wizardElement;
 
 }
+
 
 
