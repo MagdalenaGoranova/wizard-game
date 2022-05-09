@@ -10,6 +10,7 @@
 <body>
     <div class="game-view">
         <div class="start-screen">Start Game</div> 
+        <div class="score-screen">0 pts.</div>
         <div class="play-screen hidden"></div>
         
     </div>
@@ -37,7 +38,7 @@
 
         function gameLoop(timestamp) { 
             let { wizard } = state; 
-            let { wizardElement } = game;
+            let { wizardElement, scoreScreen } = game;
 
             modifyWizardPosition(state, game); 
 
@@ -46,18 +47,18 @@
             .forEach(x => {
                 let currentPosition = parseInt(x.style.left); // turn px into a number (10px -> 10)
 
-                 // check for collision - we check for collision before moving the bug to the left
-                if (hasCollision(wizardElement, x)) {
-                    state.gameOver = true; 
-
-                } 
-
                 //  we have to delete the bugs when x < 0 (when they reach the end of the screen)
                 if(currentPosition > 0 ) {
                     x.style.left = currentPosition - state.bugStats.speed + 'px'; // moves bug to the left
                 } else {
                     x.remove(); // remove the bug elements from the DOM 
                 }
+
+                  // check for collision 
+                if (hasCollision(wizardElement, x)) {
+                    state.gameOver = true; 
+
+                } 
   
             });
         
@@ -70,20 +71,30 @@
             // Render - visualize the logic 
             wizardElement.style.top = wizard.y + 'px'; 
             wizardElement.style.left = wizard.x + 'px'; 
+            scoreScreen.textContent = state.score + 'pts.';
+
 
             if(!state.gameOver) {
+                state.score += 1; // adding score
                 window.requestAnimationFrame(gameLoop);
             } else {
-                alert('Game Over');
+                alert('Game Over' + state.score);
             }
         }
         function modifyWizardPosition(state,  game) {
             let wizard = state.wizard;
+
+            // add gravity pull 
+            let isLowerBound = wizard.y + wizard.height >= game.playScreen.offsetHeight;
+            if(!isLowerBound) {
+                wizard.y += wizard.gravity;
+
+            }
             // user input 
             if (state.keys.KeyW && wizard.y > 0)  {
                 wizard.y -= wizard.speed; 
             }
-            if (state.keys.KeyS && wizard.y + wizard.height < game.playScreen.offsetHeight) {
+            if (state.keys.KeyS && !isLowerBound) {
                 wizard.y += wizard.speed;
             }
             if (state.keys.KeyA && wizard.x > 0) {

@@ -22,6 +22,11 @@ body {
     width: 100%;
     height: 100%;
 }
+.score-screen {
+    background-color: black;
+    color: white;
+    text-align: center;
+}
 .hidden {
     display: none;
 }
@@ -37,5 +42,5 @@ body {
     position: absolute;
     background-image: url(/images/bug.png);
     background-size: cover;
-    
+
 }
