@@ -46,10 +46,24 @@
             if(state.keys.Space) {
                 //First change the picture of the wizard when shooting
                 wizardElement.style.backgroundImage = "url('/images/wizard-fire.png')"; 
-                game.createFireball();
+                game.createFireball(); 
+                // to do: add timer to separate the release of each fireball 
             } else {
                 wizardElement.style.backgroundImage = "url('/images/wizard.png)"; 
             }
+            // Move fireballs 
+            Array.from(document.getElementsByClassName('fireball'))
+            .forEach(x => {
+                let currentPosition = parseInt(x.style.left); // turn px into a number (10px -> 10)
+
+                if(currentPosition + state.fireballStats.width <  game.playScreen.offsetWidth ) {
+                    x.style.left = currentPosition + state.fireballStats.speed + 'px';  // move fireball to the right
+                } else {
+                    x.remove(); // 
+                }
+            });
+
+
 
             // Move bugs 
             Array.from(document.getElementsByClassName('bug'))
