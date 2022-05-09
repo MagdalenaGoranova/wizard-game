@@ -23,6 +23,10 @@
 
         game.startScreen.addEventListener('click', gameStart);
 
+        document.addEventListener('keydown', onKeyDown);
+        document.addEventListener('keyup', onKeyUp);
+        
+
         function gameStart() {
            
             game.startScreen.classList.add('hidden');
@@ -32,14 +36,31 @@
         }
 
         function gameLoop() {
+            let { wizard } = state; 
+            let { wizardElement } = game;
+
+            // user input 
+            if (state.keys.keyW) {
+                wizard.y -= wizard.speed; 
+            }
+
+            // Render - visualize the logic 
+            wizardElement.style.top = wizard.y + 'px';
+
+
             if(!state.gameOver) {
                 window.requestAnimationFrame(gameLoop);
             } else {
                 alert('Game Over');
             }
-           
-
-
+        }
+        function onKeyDown(e) {
+            console.log(e.code);// the button which is pressed
+            state.keys[e.code] = true; 
+        }
+        function onKeyUp(e) {
+            state.keys[e.code] = false; 
+            console.log(state.keys); // checking what keys is pressed 
 
         }
     </script>

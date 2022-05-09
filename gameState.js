@@ -1,10 +1,12 @@
 function gameStateFactory() {
-    gameOver = false;
     let state = {
+        gameOver: false,
         wizard: {
             x: 100, 
             y: 200,
-        }
+            speed: 7
+        },
+        keys: {},
     };
     return function() {
         return state;
