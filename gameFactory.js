@@ -20,6 +20,7 @@ function gameFactory() {
             bugElement.classList.add('bug'); 
             bugElement.style.width = bugStats.width + 'px';
             bugElement.style.height = bugStats.height + 'px';
+            
             // bug position  - make position random every time not fixed 
             bugElement.style.left = playScreen.offsetWidth - bugStats.width + 'px';
             bugElement.style.top = (playScreen.offsetHeight - bugStats.height) * Math.random() + 'px';
