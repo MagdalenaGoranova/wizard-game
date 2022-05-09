@@ -41,10 +41,16 @@
 
             modifyWizardPosition(state, game); 
 
-            // move bug 
+            // move bugs 
             Array.from(document.getElementsByClassName('bug'))
             .forEach(x => {
                 let currentPosition = parseInt(x.style.left); // turn px into a number (10px -> 10)
+
+                 // check for collision - we check for collision before moving the bug to the left
+                if (hasCollision(wizardElement, x)) {
+                    state.gameOver = true; 
+
+                } 
 
                 //  we have to delete the bugs when x < 0 (when they reach the end of the screen)
                 if(currentPosition > 0 ) {
@@ -52,15 +58,9 @@
                 } else {
                     x.remove(); // remove the bug elements from the DOM 
                 }
-               
-
-                
-
-                // check for collision 
+  
             });
-           
-
-
+        
             //spawn bugs 
             if(state.bugStats.nextBugCreation < timestamp) {
             game.createBug(); 
@@ -93,6 +93,14 @@
                 wizard.x += wizard.speed;
             }
 
+        }
+        function hasCollision(firstElement, secondElement) {
+            let first = firstElement.getBoundingClientRect(); // this func
+            let second = secondElement.getBoundingClientRect();
+
+            // checking all cases where the 2 elements do not touch so if they are all false then the element are touching!!!  
+            return !(first.top > second.bottom || first.bottom < second.top || first.right < second.left || first.left > second.right) 
+                  
         }
         function onKeyDown(e) {
             console.log(e.code);// the button which is pressed
