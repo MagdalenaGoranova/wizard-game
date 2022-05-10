@@ -50,10 +50,18 @@
                 wizardElement.style.backgroundImage = "url('/images/wizard-fire.png')"; 
 
                 // add timer to separate the release of each fireball 
+
+                if(state.fireballStats.nextFireballCreation < timestamp) {
+                game.createFireball(); 
+                state.fireballStats.nextFireballCreation = timestamp + state.fireballStats.attackSpeed;
+                }
+                
+
             if(state.fireballStats.nextFireballCreation < timestamp) {
                 game.createFireball(); 
                 state.fireballStats.nextFireballCreation = timestamp + state.fireballStats.attackSpeed;
             }
+
             } else {
                 wizardElement.style.backgroundImage = "url('/images/wizard.png')"; 
             }
@@ -86,8 +94,13 @@
                 // check for collision 
                 if (hasCollision(wizardElement, x)) {
                     state.gameOver = true; 
+
+
+                }
+
     
                 } 
+
                 //  we have to delete the bugs when x < 0 (when they reach the end of the screen)
                 if(currentPosition > 0 ) {
                     x.style.left = currentPosition - state.bugStats.speed + 'px'; // moves bug to the left
@@ -95,9 +108,8 @@
                     x.remove(); // remove the bug elements from the DOM 
                 }
 
-              
-  
             });
+
             //wizard level up
             
             if (wizard.experience >= 1000) {
@@ -108,6 +120,10 @@
                 wizard.experience = 0;
             }
             //spawn bugs 
+
+        
+            //Spawn bugs 
+
             if(state.bugStats.nextBugCreation < timestamp) {
                 if(state.score >= 10000) {
                     state.bugStats.maxCreationInterval -= 50;
@@ -173,7 +189,12 @@
             state.keys[e.code] = true; 
         }
         function onKeyUp(e) {
+
+            state.keys[e.code] = false; 
+            console.log(state.keys); // checking what key is pressed with true, false
+
             state.keys[e.code] = false; // checking what keys is pressed 
+
 
         }
     </script>

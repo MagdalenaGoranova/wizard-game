@@ -27,7 +27,7 @@ function gameFactory() {
         createFireball: () => {
             let fireballElement = document.createElement('div');
             fireballElement.classList.add('fireball'); 
-            // add dynamic width and height so we can change them later in the game 
+            // add dynamic width and height so it can changed later in the game 
             fireballElement.style.width = fireballStats.width + 'px'; 
             fireballElement.style.height = fireballStats.height + 'px'; 
 
