@@ -97,9 +97,7 @@
 
 
                 }
-
-    
-                } 
+ 
 
                 //  we have to delete the bugs when x < 0 (when they reach the end of the screen)
                 if(currentPosition > 0 ) {
@@ -112,23 +110,32 @@
 
             //wizard level up
             
-            if (wizard.experience >= 1000) {
-                wizard.level += 1;
-                state.fireballStats.attackSpeed -= 50;
-                state.fireballStats.height += 1;
-                state.fireballStats.width += 1;
-                wizard.experience = 0;
+            if (wizard.level < 10) {
+                if (wizard.experience >= 1000) {
+                    wizard.level += 1;
+                    state.fireballStats.attackSpeed -= 50;
+                    state.fireballStats.height += 1;
+                    state.fireballStats.width += 1;
+                    wizard.experience = 0;
+                }
             }
-            //spawn bugs 
 
         
             //Spawn bugs 
 
             if(state.bugStats.nextBugCreation < timestamp) {
                 if(state.score >= 10000) {
-                    state.bugStats.maxCreationInterval -= 50;
+                    if(state.bugStats.maxCreationInterval > 1250) {
+                        state.bugStats.maxCreationInterval -= 50;
+                    }
+                } else if (state.score >=  50000) {
+                    if(state.bugStats.maxCreationInterval > 950) {
+                        state.bugStats.maxCreationInterval -= 50;
+                    }
                 } else if (state.score >=  100000) {
-                    state.bugStats.maxCreationInterval -= 50;
+                    if(state.bugStats.maxCreationInterval > 750) {
+                        state.bugStats.maxCreationInterval -= 50;
+                    }
                 }
             game.createBug(); 
             state.bugStats.nextBugCreation = timestamp + Math.random() * state.bugStats.maxCreationInterval;
