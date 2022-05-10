@@ -1,6 +1,7 @@
 body {
     margin:0;
     font-family: 'consolas';
+    overflow: hidden;
 }
 .game-view {
     background-color: skyblue;
@@ -36,12 +37,14 @@ body {
     background-size: cover;
     width: 82px;
     height: 100px;
+    border: 2px solid black;
 
 }
 .bug {
     position: absolute;
     background-image: url('/images/bug.png');
     background-size: cover;
+    border: 2px solid red;
 
 }
 .fireball {

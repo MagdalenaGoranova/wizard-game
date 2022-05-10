@@ -18,10 +18,9 @@ function gameFactory() {
             bugElement.classList.add('bug'); 
             bugElement.style.width = bugStats.width + 'px';
             bugElement.style.height = bugStats.height + 'px';
-
             // bug position  - make position random every time not fixed 
-            bugElement.style.left = playScreen.offsetWidth - bugStats.width + 'px';
-            bugElement.style.top = (playScreen.offsetHeight - bugStats.height) * Math.random() + 'px';
+            bugElement.style.left = playScreen.offsetWidth - 5 - bugStats.width + 'px';
+            bugElement.style.top = (playScreen.offsetHeight - 5 - bugStats.height) * Math.random() + 'px';
 
            playScreen.appendChild(bugElement);
         },
@@ -33,8 +32,8 @@ function gameFactory() {
             fireballElement.style.height = fireballStats.height + 'px'; 
 
             // add position of the fireball 
-            fireballElement.style.left = wizard.x + 'px';
-            fireballElement.style.top = wizard.y + 'px'; 
+            fireballElement.style.left = wizard.x + 10 + 'px';
+            fireballElement.style.top = wizard.y + 10 + 'px'; 
 
             playScreen.appendChild(fireballElement); 
         }
