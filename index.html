@@ -8,10 +8,13 @@
     <title>Wizard Game</title>
 </head>
 <body>
+    
+    <div class="score-screen-div hidden">
+        <p class="score-screen"">0 pts</p>
+        <p class="level-screen">Level: </p>
+    </div>
     <div class="game-view">
         <div class="start-screen">Start Game</div> 
-        <div class="score-screen">0 pts.</div>
-        <div class="level-screen">0 pts.</div>
         <div class="play-screen hidden"></div>
         
     </div>
@@ -30,6 +33,7 @@
            
             game.startScreen.classList.add('hidden');
             game.playScreen.classList.remove('hidden');
+            game.scoreScreen.classList.remove('hidden');
 
             window.requestAnimationFrame(gameLoop);
         }
@@ -46,18 +50,18 @@
                 wizardElement.style.backgroundImage = "url('/images/wizard-fire.png')"; 
 
                 // add timer to separate the release of each fireball 
-<<<<<<< HEAD
+
                 if(state.fireballStats.nextFireballCreation < timestamp) {
                 game.createFireball(); 
                 state.fireballStats.nextFireballCreation = timestamp + state.fireballStats.attackSpeed;
                 }
                 
-=======
+
             if(state.fireballStats.nextFireballCreation < timestamp) {
                 game.createFireball(); 
                 state.fireballStats.nextFireballCreation = timestamp + state.fireballStats.attackSpeed;
             }
->>>>>>> 97a4135db9c218bc3108d1b33ab032a03ae77437
+
             } else {
                 wizardElement.style.backgroundImage = "url('/images/wizard.png')"; 
             }
@@ -76,7 +80,8 @@
                 .forEach(bug => {
                     if (hasCollision(fireball, bug)) {
                     bug.remove(); 
-                    fireball.remove(); 
+                    fireball.remove();
+                    wizard.experience += 250; 
                     state.score += state.bugStats.score; 
                     } 
                 });
@@ -89,13 +94,13 @@
                 // check for collision 
                 if (hasCollision(wizardElement, x)) {
                     state.gameOver = true; 
-<<<<<<< HEAD
+
 
                 }
-=======
+
     
                 } 
->>>>>>> 97a4135db9c218bc3108d1b33ab032a03ae77437
+
                 //  we have to delete the bugs when x < 0 (when they reach the end of the screen)
                 if(currentPosition > 0 ) {
                     x.style.left = currentPosition - state.bugStats.speed + 'px'; // moves bug to the left
@@ -103,15 +108,28 @@
                     x.remove(); // remove the bug elements from the DOM 
                 }
 
-<<<<<<< HEAD
-=======
-              
-  
->>>>>>> 97a4135db9c218bc3108d1b33ab032a03ae77437
             });
+
+            //wizard level up
+            
+            if (wizard.experience >= 1000) {
+                wizard.level += 1;
+                state.fireballStats.attackSpeed -= 50;
+                state.fireballStats.height += 1;
+                state.fireballStats.width += 1;
+                wizard.experience = 0;
+            }
+            //spawn bugs 
+
         
             //Spawn bugs 
+
             if(state.bugStats.nextBugCreation < timestamp) {
+                if(state.score >= 10000) {
+                    state.bugStats.maxCreationInterval -= 50;
+                } else if (state.score >=  100000) {
+                    state.bugStats.maxCreationInterval -= 50;
+                }
             game.createBug(); 
             state.bugStats.nextBugCreation = timestamp + Math.random() * state.bugStats.maxCreationInterval;
             }
@@ -122,7 +140,8 @@
             // Render - visualize the logic 
             wizardElement.style.top = wizard.y + 'px'; 
             wizardElement.style.left = wizard.x + 'px'; 
-            scoreScreen.textContent = state.score + 'pts.';
+            scoreScreen.firstChild.textContent = state.score + 'pts.';
+            scoreScreen.lastChild.textContent = wizard.level;
 
 
             if(!state.gameOver) {
@@ -170,12 +189,12 @@
             state.keys[e.code] = true; 
         }
         function onKeyUp(e) {
-<<<<<<< HEAD
+
             state.keys[e.code] = false; 
             console.log(state.keys); // checking what key is pressed with true, false
-=======
+
             state.keys[e.code] = false; // checking what keys is pressed 
->>>>>>> 97a4135db9c218bc3108d1b33ab032a03ae77437
+
 
         }
     </script>

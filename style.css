@@ -8,6 +8,9 @@ body {
     width: 100vw;
     height: 100vh;
 }
+p {
+    display: inline;
+}
 .start-screen {
     text-align: center;
     background-color: lightgreen;
@@ -23,7 +26,7 @@ body {
     width: 100%;
     height: 100%;
 }
-.score-screen {
+.score-screen-div {
     background-color: black;
     color: white;
     text-align: center;
