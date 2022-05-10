@@ -8,10 +8,13 @@
     <title>Wizard Game</title>
 </head>
 <body>
+    
+    <div class="score-screen-div hidden">
+        <p class="score-screen"">0 pts</p>
+        <p class="level-screen">Level: </p>
+    </div>
     <div class="game-view">
         <div class="start-screen">Start Game</div> 
-        <div class="score-screen">0 pts.</div>
-        <div class="level-screen">0 pts.</div>
         <div class="play-screen hidden"></div>
         
     </div>
@@ -30,6 +33,7 @@
            
             game.startScreen.classList.add('hidden');
             game.playScreen.classList.remove('hidden');
+            game.scoreScreen.classList.remove('hidden');
 
             window.requestAnimationFrame(gameLoop);
         }
@@ -68,7 +72,8 @@
                 .forEach(bug => {
                     if (hasCollision(fireball, bug)) {
                     bug.remove(); 
-                    fireball.remove(); 
+                    fireball.remove();
+                    wizard.experience += 250; 
                     state.score += state.bugStats.score; 
                     } 
                 });
@@ -93,9 +98,22 @@
               
   
             });
-        
+            //wizard level up
+            
+            if (wizard.experience >= 1000) {
+                wizard.level += 1;
+                state.fireballStats.attackSpeed -= 50;
+                state.fireballStats.height += 1;
+                state.fireballStats.width += 1;
+                wizard.experience = 0;
+            }
             //spawn bugs 
             if(state.bugStats.nextBugCreation < timestamp) {
+                if(state.score >= 10000) {
+                    state.bugStats.maxCreationInterval -= 50;
+                } else if (state.score >=  100000) {
+                    state.bugStats.maxCreationInterval -= 50;
+                }
             game.createBug(); 
             state.bugStats.nextBugCreation = timestamp + Math.random() * state.bugStats.maxCreationInterval;
             }
@@ -106,7 +124,8 @@
             // Render - visualize the logic 
             wizardElement.style.top = wizard.y + 'px'; 
             wizardElement.style.left = wizard.x + 'px'; 
-            scoreScreen.textContent = state.score + 'pts.';
+            scoreScreen.firstChild.textContent = state.score + 'pts.';
+            scoreScreen.lastChild.textContent = wizard.level;
 
 
             if(!state.gameOver) {
@@ -142,7 +161,7 @@
 
         }
         function hasCollision(firstElement, secondElement) {
-            let first = firstElement.getBoundingClientRect(); // this func
+            let first = firstElement.getBoundingClientRect(); 
             let second = secondElement.getBoundingClientRect();
 
             // checking all cases where the 2 elements do not touch so if they are all false then the element are touching!!!  
