@@ -45,9 +45,10 @@
                 wizardElement.style.backgroundImage = "url('/images/wizard-fire.png')"; 
 
                 // add timer to separate the release of each fireball 
-                if(state.fireballStats.nextFireballCreation < timestamp)
+                if(state.fireballStats.nextFireballCreation < timestamp) {
                 game.createFireball(); 
                 state.fireballStats.nextFireballCreation = timestamp + state.fireballStats.attackSpeed;
+                }
                 
             } else {
                 wizardElement.style.backgroundImage = "url('/images/wizard.png')"; 
@@ -77,6 +78,11 @@
             .forEach(x => {
                 let currentPosition = parseInt(x.style.left); // turn px into a number (10px -> 10)
 
+                // check for collision 
+                if (hasCollision(wizardElement, x)) {
+                    state.gameOver = true; 
+
+                }
                 //  we have to delete the bugs when x < 0 (when they reach the end of the screen)
                 if(currentPosition > 0 ) {
                     x.style.left = currentPosition - state.bugStats.speed + 'px'; // moves bug to the left
@@ -84,15 +90,9 @@
                     x.remove(); // remove the bug elements from the DOM 
                 }
 
-                  // check for collision 
-                if (hasCollision(wizardElement, x)) {
-                    state.gameOver = true; 
-
-                } 
-  
             });
         
-            //spawn bugs 
+            //Spawn bugs 
             if(state.bugStats.nextBugCreation < timestamp) {
             game.createBug(); 
             state.bugStats.nextBugCreation = timestamp + Math.random() * state.bugStats.maxCreationInterval;
@@ -111,7 +111,7 @@
                 state.score += 1; // adding score
                 window.requestAnimationFrame(gameLoop);
             } else {
-                alert('Game Over' + state.score);
+                alert('Game Over ' + state.score);
             }
         }
         function modifyWizardPosition(state,  game) {
@@ -139,7 +139,7 @@
 
         }
         function hasCollision(firstElement, secondElement) {
-            let first = firstElement.getBoundingClientRect(); // this func
+            let first = firstElement.getBoundingClientRect(); 
             let second = secondElement.getBoundingClientRect();
 
             // checking all cases where the 2 elements do not touch so if they are all false then the element are touching!!!  
@@ -153,7 +153,7 @@
         }
         function onKeyUp(e) {
             state.keys[e.code] = false; 
-            console.log(state.keys); // checking what keys is pressed 
+            console.log(state.keys); // checking what key is pressed with true, false
 
         }
     </script>

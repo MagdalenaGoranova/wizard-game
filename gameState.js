@@ -8,7 +8,7 @@
             width: 82,
             height: 100,
             speed: 7,
-            gravity: 2,
+            gravity: 0,
         },
         keys: {},
         bugStats: {
@@ -23,8 +23,8 @@
             width: 40,
             height: 40,
             speed: 10,
-            nextBugCreation: 0, 
-            attackSpeed: 400,
+            nextFireballCreation: 0, 
+            attackSpeed: 1000,
 
             //add damage of the bug
         }
