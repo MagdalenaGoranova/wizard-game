@@ -11,6 +11,7 @@
     <div class="game-view">
         <div class="start-screen">Start Game</div> 
         <div class="score-screen">0 pts.</div>
+        <div class="level-screen">0 pts.</div>
         <div class="play-screen hidden"></div>
         
     </div>
@@ -38,17 +39,17 @@
             let { wizardElement, scoreScreen } = game;
 
             modifyWizardPosition(state, game); 
-
+            
             // Shooting the bugs when pressing space 
             if(state.keys.Space) {
                 //First change the picture of the wizard when shooting
                 wizardElement.style.backgroundImage = "url('/images/wizard-fire.png')"; 
 
                 // add timer to separate the release of each fireball 
-                if(state.fireballStats.nextFireballCreation < timestamp)
+            if(state.fireballStats.nextFireballCreation < timestamp) {
                 game.createFireball(); 
                 state.fireballStats.nextFireballCreation = timestamp + state.fireballStats.attackSpeed;
-                
+            }
             } else {
                 wizardElement.style.backgroundImage = "url('/images/wizard.png')"; 
             }
@@ -77,6 +78,11 @@
             .forEach(x => {
                 let currentPosition = parseInt(x.style.left); // turn px into a number (10px -> 10)
 
+                // check for collision 
+                if (hasCollision(wizardElement, x)) {
+                    state.gameOver = true; 
+    
+                } 
                 //  we have to delete the bugs when x < 0 (when they reach the end of the screen)
                 if(currentPosition > 0 ) {
                     x.style.left = currentPosition - state.bugStats.speed + 'px'; // moves bug to the left
@@ -84,11 +90,7 @@
                     x.remove(); // remove the bug elements from the DOM 
                 }
 
-                  // check for collision 
-                if (hasCollision(wizardElement, x)) {
-                    state.gameOver = true; 
-
-                } 
+              
   
             });
         
@@ -111,20 +113,20 @@
                 state.score += 1; // adding score
                 window.requestAnimationFrame(gameLoop);
             } else {
-                alert('Game Over' + state.score);
+                alert('Game Over ' + state.score);
             }
         }
         function modifyWizardPosition(state,  game) {
             let wizard = state.wizard;
 
             // add gravity pull 
-            let isLowerBound = wizard.y + wizard.height >= game.playScreen.offsetHeight;
+            let isLowerBound = wizard.y + wizard.height >= game.playScreen.offsetHeight - 5;
             if(!isLowerBound) {
                 wizard.y += wizard.gravity;
 
             }
             // user input 
-            if (state.keys.KeyW && wizard.y > 0)  {
+            if (state.keys.KeyW && wizard.y > 20)  {
                 wizard.y -= wizard.speed; 
             }
             if (state.keys.KeyS && !isLowerBound) {
@@ -134,6 +136,7 @@
                 wizard.x -= wizard.speed; 
             }
             if (state.keys.KeyD && wizard.x + wizard.width < game.playScreen.offsetWidth) {
+                console.log(game.playScreen.offsetWidth)
                 wizard.x += wizard.speed;
             }
 
@@ -146,14 +149,12 @@
             return !(first.top > second.bottom || first.bottom < second.top || first.right < second.left || first.left > second.right) 
                   
         }
-        function onKeyDown(e) {
-            console.log(e.code);// the button which is pressed
+        function onKeyDown(e) {;// the button which is pressed
             e.preventDefault();
             state.keys[e.code] = true; 
         }
         function onKeyUp(e) {
-            state.keys[e.code] = false; 
-            console.log(state.keys); // checking what keys is pressed 
+            state.keys[e.code] = false; // checking what keys is pressed 
 
         }
     </script>
