@@ -9,8 +9,9 @@
             height: 100,
             speed: 7,
             gravity: 0,
-            experience: 0,
             level: 1,
+            experience: 0,
+
         },
         keys: {},
         bugStats: {
@@ -26,7 +27,8 @@
             height: 40,
             speed: 10,
             nextFireballCreation: 0, 
-            attackSpeed: 1500,
+            attackSpeed: 1000,
+
 
             //add damage of the bug
         }
