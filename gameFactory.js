@@ -1,5 +1,5 @@
 function gameFactory() {
-    let { wizard, bugStats,  fireballStats } = state; // state is now global object 
+    let { wizard, bugStats,  fireballStats, cloudStats } = state; // state is now global object 
 
     let startScreen = document.querySelector('.start-screen');
     let playScreen = document.querySelector('.play-screen');
@@ -36,6 +36,16 @@ function gameFactory() {
             fireballElement.style.top = wizard.y + 25 + 'px'; 
 
             playScreen.appendChild(fireballElement); 
+        },
+        createCloud: () => {
+            let cloudElement = document.createElement('div'); 
+            cloudElement.classList.add('cloud'); 
+
+            //position 
+            cloudElement.style.left = playScreen.offsetWidth + 25 - cloudStats.width + 'px';
+            cloudElement.style.top = (playScreen.offsetHeight + 25 - cloudStats.height) * Math.random() + 'px';
+
+            playScreen.appendChild(cloudElement); 
         }
         
     };

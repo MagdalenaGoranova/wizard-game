@@ -55,3 +55,11 @@ p {
     background-image: url('/images/fire-ball.png');
     background-size: cover;
 }
+.cloud {
+    position: absolute;
+    background-image: url('/images/cloud.png');
+    background-size: cover;
+    width: 200px;
+    height: 200px;
+
+}

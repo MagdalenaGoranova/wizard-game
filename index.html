@@ -104,6 +104,19 @@
                 }
 
             });
+              // Move clouds
+              Array.from(document.getElementsByClassName('cloud'))
+            .forEach(cloud => {
+                let currentPosition = parseInt(cloud.style.left); // turn px into a number (10px -> 10)
+
+                //  we have to delete the bugs when x < 0 (when they reach the end of the screen)
+                if(currentPosition > 0 ) {
+                    cloud.style.left = currentPosition - state.cloudStats.speed + 'px'; // moves bug to the left
+                } else {
+                    cloud.remove(); // remove the bug elements from the DOM 
+                }
+
+            });
 
             //wizard level up
             
@@ -116,8 +129,12 @@
                     wizard.experience = 0;
                 }
             }
+            //Spawn clouds 
 
-        
+            if(state.cloudStats.nextCloudCreation < timestamp) {
+            game.createCloud(); 
+            state.cloudStats.nextCloudCreation = timestamp + Math.random() * state.cloudStats.maxCreationInterval;
+            }
             //Spawn bugs 
 
             if(state.bugStats.nextBugCreation < timestamp) {
@@ -141,6 +158,8 @@
             // Increase bug speed 
             state.bugStats.speed += 0.001; 
 
+            
+
             // Render - visualize the logic 
             wizardElement.style.top = wizard.y + 'px'; 
             wizardElement.style.left = wizard.x + 'px'; 
@@ -154,6 +173,8 @@
             } else {
                 alert('Game Over ' + state.score);
             }
+
+           
         }
         function modifyWizardPosition(state,  game) {
             let wizard = state.wizard;
